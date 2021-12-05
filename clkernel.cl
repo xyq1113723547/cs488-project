@@ -122,7 +122,7 @@ float3 trace(__constant Sphere* spheres, const Ray* camray, const int sphere_cou
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(spheres, &ray, &t, &hitsphere_id, sphere_count)) {
 			t = 0.5f*(ray.dir.y + 1.0f);
-			return (1.0f-t)*float3(1.0f, 1.0f, 1.0f) + t*float3(0.5f, 0.7f, 1.0f);
+			return (1.0f-t)*(float3)(1.0f, 1.0f, 1.0f) + t*(float3)(0.5f, 0.7f, 1.0f);
 		}
 
 		/* else, we've got a hit! Fetch the closest hit sphere */
@@ -144,8 +144,8 @@ float3 trace(__constant Sphere* spheres, const Ray* camray, const int sphere_cou
 		}
 		
 		float3 reflect = ray.dir + normal * (dot(normal, ray.dir) * -2.0f);
-		float phong = pow(dot(point_to_light, reflect)* (diffuse > 0), 64.0);
-		accum_color += float3(phong, phong, phong);
+		float phong = pow(dot(point_to_light, reflect)* (diffuse > 0), 64.0f);
+		accum_color += (float3)(phong, phong, phong);
 		
 		ray.dir = reflect;
 		ray.origin = hitpoint;
