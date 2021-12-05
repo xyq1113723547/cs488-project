@@ -4,7 +4,7 @@
 
 __constant float EPSILON = 0.00003f; /* required to compensate for limited float precision */
 __constant float PI = 3.14159265359f;
-__constant int SAMPLES = 16;
+__constant int SAMPLES = 1;
 
 typedef struct Ray{
 	float3 origin;
@@ -38,21 +38,20 @@ static float get_random(unsigned int *seed0, unsigned int *seed1) {
 
 Ray createCamRay(const int x_coord, const int y_coord, const int width, const int height){
 
-	float fx = (float)x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
-	float fy = (float)y_coord / (float)height; /* convert int in range [0 - height] to float in range [0-1] */
-
-	/* calculate aspect ratio */
-	float aspect_ratio = (float)(width) / (float)(height);
-	float fx2 = (fx - 0.5f) * aspect_ratio;
-	float fy2 = fy - 0.5f;
-
-	/* determine position of pixel on screen */
-	float3 pixel_pos = (float3)(fx2, fy2, 0.0f);
+	float3 camera_w = (float3)(0.0f,0.0f,-1.0f);
+ 	float3 camera_u = cross((float3)(0.0f,1.0f,0.0f), camera_w);
+  	float3 camera_v = cross(camera_w, camera_u);
+	float3 origin = (float3)(0.0f,0.0f,-800.0f);
+	float x_film = 3.5f*(x_coord-width/-2.0f+0.5f)/(float)width; // view x range [-w/2, w/2]
+	float y_film = 3.5f*(y_coord-height/2.0f+0.5f)/(float)height; // view y range [-h/2, h/2]
+	float z = 5.0f; //distance_to_film
+	float3 pixel = x_film*camera_u+y_film*camera_v+z*camera_w+origin;
+	float3 direction = normalize(pixel - origin);
 
 	/* create camera ray*/
 	Ray ray;
-	ray.origin = (float3)(0.0f, 0.1f, 2.0f); /* fixed camera position */
-	ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen */
+	ray.origin = origin; /* fixed camera position */
+	ray.dir = direction; /* vector from camera to pixel on screen */
 
 	return ray;
 }
@@ -80,7 +79,7 @@ bool intersect_scene(__constant Sphere* spheres, const Ray* ray, float* t, int* 
 	so t will be guaranteed to be smaller
 	when a hit with the scene occurs */
 
-	float inf = FLT_MAX;
+	float inf = 1e20f;
 	*t = inf;
 
 	/* check if the ray intersects each sphere in the scene */
@@ -111,9 +110,9 @@ float3 trace(__constant Sphere* spheres, const Ray* camray, const int sphere_cou
 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
-	
-	float3 lightpoint = (float3)(-100.0f, 150.0f, 400.0f);
 
+	float3 lightpoint = (float3)(0.0f, 1.36f, 0.0f);
+	
 	for (int bounces = 0; bounces < 8; bounces++){
 
 		float t;   /* distance to intersection */
