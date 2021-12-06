@@ -6,8 +6,8 @@ My project is about GPU accelerated ray tracing demostrations written in C++ and
 
 ## Files structures
 There are two versions for my ray tracer:
-- one is CPU-based, without OpenGL version, the output is `nohier.png` file.
-- Another is GPU-based, with OpenCL source code and invokes OpenGL using glew and glut library, the output is a static OpenGL window.
+- one is CPU-based, without OpenGL version, the default input is `nohier.lua` and the output is `nohier.png` file.
+- Another is GPU-based, with OpenCL source code and invokes OpenGL using glew and glut library, there is no input for client, and the output is a static OpenGL window.
 - On Windows 10, the OpenCL version can be run by double click `Project1.exe` with `opencl_kernel.cl` `glew64.dll` and `glut64.dll` in the same directory.
 
 ## implemented technical aspects
@@ -19,8 +19,9 @@ There are two versions for my ray tracer:
 
 ## Source Code explanation
 1. Since OpenCL do not allow recursion, I need to transform my recursive ray-tracer to a iterative one. Luckily, by adding accumulator for color, and change ray direction after each iteration, it is sufficient for this transformation.
-2. The OpenCL source code is adapted from Ray Tracey's blog [here](https://github.com/straaljager/OpenCL-path-tracing-tutorial-3-Part-1). I change the OpenCL kernel source code by add my ray tracer and ray-sphere intersetion functions, though keep the OpenCL and OpenGL inter-operation header, API invocations, and helper functions as the same as the origin one.
-3. The non-OpenCL version is based on my CS488 A4, all written by me.
+2. There is a new way for dealing with pixels being black where the ray trapped inside the sphere. I add a exclude id as new parameter to intersector, which is the hitted object's id, when calculating the shadow ray intersection, then the ray can be reflected out as normal. 
+3. The OpenCL source code is adapted from Ray Tracey's blog [here](https://github.com/straaljager/OpenCL-path-tracing-tutorial-3-Part-1). I change the OpenCL kernel source code by add my ray tracer and ray-sphere intersetion functions, though keep the OpenCL and OpenGL inter-operation header, API invocations, and helper functions as the same as the origin one.
+4. The non-OpenCL version is based on my CS488 A4, all written by me.
 
 ## OpenCL environment preparation
 - On Windows 10
