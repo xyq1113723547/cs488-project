@@ -7,7 +7,7 @@ My project is about GPU accelerated ray tracing demostrations written in C++ and
 ## Files structures
 There are two versions for my ray tracer:
 - one is CPU-based, without OpenGL version. The default input is `Assets/nohier.lua` and the output is `Assets/nohier.png` file.
-- Another is GPU-based, with OpenCL source code and invokes OpenGL using glew and glut library. There is no input for client. The output is a static OpenGL window.
+- Another is GPU-based, with OpenCL kernel source code and invokes OpenGL using glew and glut library. There is no input for client. The output is a static OpenGL window.
 - On Windows 10, the OpenCL version can be run by double click `Project1.exe` with `opencl_kernel.cl` `glew64.dll` and `glut64.dll` in the same directory.
 
 ## Implemented technical aspects
@@ -52,7 +52,11 @@ Besides, it is a royalty-free framework for parallel programming using GPUs.
 The implementation for ray tracing extension in Vulkan is vendor specific. 
 Old GPUs do not have the ray tracing extension. Only NVIDIA RTX GPUs or AMD RDMA2 GPUs support it, unfortunately which I do not have.
 I could dig deeper to use Vulkan for some parallel mathematical operations, but it lacks documentation and requires some low-level hardware understanding for GPU.
-
+3. Why I do not implement anti-aliasing in OpenCL by multi-sampling?  
+The first reason is that there is no random number generator in OpenCL.  
+I need to pass random number from C++ to OpenCL buffer. 
+However, in this case the same working group get the same random number ! (The working-group means that they share local memory of computing tasks). 
+The image will looks glitchy, where pixels' columns are not aligned.
 ## Credits
 - [smallpt](http://www.kevinbeason.com/smallpt/)
 - [Business Card Ray Tracer](http://eastfarthing.com/blog/2016-01-12-card/)
