@@ -2,7 +2,7 @@
 ## Overview
 My project is about GPU accelerated ray tracing demostrations written in C++ and OpenCL, targeting multi-platform use.  
 ![cl_image](https://user-images.githubusercontent.com/53088781/144907254-13927407-f7b6-4231-b749-6b99e39a31d7.png)
-
+![png_image](https://github.com/xyq1113723547/cs488-project/blob/main/nonhier.png)
 
 ## Files structures
 There are two versions for my ray tracer:
@@ -10,7 +10,7 @@ There are two versions for my ray tracer:
 - Another is GPU-based, with OpenCL source code and invokes OpenGL using glew and glut library. There is no input for client, and the output is a static OpenGL window.
 - On Windows 10, the OpenCL version can be run by double click `Project1.exe` with `opencl_kernel.cl` `glew64.dll` and `glut64.dll` in the same directory.
 
-## implemented technical aspects
+## Implemented technical aspects
 1. recursive ray tracer for CPU
 2. [Phong reflection model](https://en.wikipedia.org/wiki/Phong_reflection_model)
 3. [Lambertian reflectance](https://en.wikipedia.org/wiki/Lambertian_reflectance)
@@ -36,7 +36,7 @@ There are two versions for my ray tracer:
   - For Gentoo, check [here](https://wiki.gentoo.org/wiki/OpenCL)
 - On MacOS, please see https://developer.apple.com/opencl/ for support list and code samples.
 
-## compile instruction
+## Compile instruction
 - On Windows 10 for OpenCL version
   I use MSVC with Visual Studio and AMD RX560 GPU for my OpenCL version and I installed AMD APP SDK 3.0.
   - add `C:\Program Files (x86)\AMD APP SDK\3.0\include` to "Additional Include Directories" in Visual Studio.
@@ -59,7 +59,7 @@ I could dig deeper to use Vulkan for some parallel mathematical operations, but 
 - [Ray Tracey's blog](https://raytracey.blogspot.com/2017/01/opencl-path-tracing-tutorial-3-opengl.html)
 - [Ray Tracing in One Weekend](https://raytracing.github.io/)
 
-## objective obstacles
+## Objective obstacles
 
 1. OpenCL is somewhat abandoned, at least for AMD and Apple, since they are not providing drivers, libraries and documentations anymore.
 2. OpenCL is very hard to debug, although OpenCL C language is a subset of C99 with some extensions, it do *NOT* allow for comment using `//`, `size_t double goto` is missing for some implementations. The OpenCL source code is passed to source code as string then compile just-in-time by invoke API.
