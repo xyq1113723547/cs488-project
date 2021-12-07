@@ -8,7 +8,7 @@ My project is about GPU accelerated ray tracing demostrations written in C++ and
 There are two versions for my ray tracer:
 - one is CPU-based, without OpenGL version. The default input is `Assets/nohier.lua` and the output is `Assets/nohier.png` file.
 - Another is GPU-based, with OpenCL kernel source code and invokes OpenGL using glew and glut library. There is no input for client. The output is a static OpenGL window.
-- On Windows 10, the OpenCL version can be run by double click `Project1.exe` with `opencl_kernel.cl` `glew64.dll` and `glut64.dll` in the same directory.
+- On Windows 10 with x86_64 arhchitecture, the OpenCL version can be run by double click `Project1.exe` with `opencl_kernel.cl` `glew64.dll` and `glut64.dll` in the same directory.
 
 ## Implemented technical aspects
 1. recursive ray tracer for CPU
