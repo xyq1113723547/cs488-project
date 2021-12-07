@@ -2,12 +2,12 @@
 ## Overview
 My project is about GPU accelerated ray tracing demostrations written in C++ and OpenCL, targeting multi-platform use.  
 ![cl_image](https://user-images.githubusercontent.com/53088781/144907254-13927407-f7b6-4231-b749-6b99e39a31d7.png)
-![png_image](https://github.com/xyq1113723547/cs488-project/blob/main/nonhier.png)
+![nonhier](https://user-images.githubusercontent.com/53088781/144993722-4fea64ec-3dc2-428c-bafd-a420d2ccd7ea.png)
 
 ## Files structures
 There are two versions for my ray tracer:
-- one is CPU-based, without OpenGL version, and the default input is `nohier.lua` and the output is `nohier.png` file.
-- Another is GPU-based, with OpenCL source code and invokes OpenGL using glew and glut library. There is no input for client, and the output is a static OpenGL window.
+- one is CPU-based, without OpenGL version. The default input is `Assets/nohier.lua` and the output is `Assets/nohier.png` file.
+- Another is GPU-based, with OpenCL source code and invokes OpenGL using glew and glut library. There is no input for client. The output is a static OpenGL window.
 - On Windows 10, the OpenCL version can be run by double click `Project1.exe` with `opencl_kernel.cl` `glew64.dll` and `glut64.dll` in the same directory.
 
 ## Implemented technical aspects
@@ -17,11 +17,11 @@ There are two versions for my ray tracer:
 3. specular recursive reflection for mirror effect
 4. iterative ray tracer for OpenCL (since OpenCL language do not allow recursion)
 
-## Source Code explanation
+## Source code explanation
 1. Since OpenCL do not allow recursion, I need to transform my recursive ray-tracer to a iterative one. Luckily, by adding accumulator for color, and change ray direction after each iteration, it is sufficient for this transformation.
-2. There is a new way for dealing with pixels being black where the ray trapped inside the sphere. I add a exclude id as new parameter to intersector, which is the hitted object's id, when calculating the shadow ray intersection, then the ray can be reflected out as normal. 
-3. The OpenCL source code is adapted from Ray Tracey's blog [here](https://github.com/straaljager/OpenCL-path-tracing-tutorial-3-Part-1). I change the OpenCL kernel source code by add my ray tracer and ray-sphere intersetion functions, though keep the OpenCL and OpenGL inter-operation header, API invocations, and helper functions as the same as the origin one.
-4. The non-OpenCL version is based on my CS488 A4, all written by me.
+2. There is a new way for dealing with pixels being black where the ray trapped inside the sphere. I add a exclude id as a new parameter to intersector. When calculating the shadow ray intersection, I let hitted object's id as the exclude id, then the ray can be reflected as normal. 
+3. The C++ and OpenCL source code is adapted from Ray Tracey's blog [here](https://github.com/straaljager/OpenCL-path-tracing-tutorial-3-Part-1). I change the OpenCL kernel source code by adding my ray tracer and ray-sphere intersetion functions, though keep the OpenCL and OpenGL inter-operation header, API invocations, and helper functions as the same as the origin one.
+4. The pure C++ version is based on my CS488 A4, all written by me.
 
 ## OpenCL environment preparation
 - On Windows 10
